@@ -27,6 +27,7 @@ joblib==1.2.0
 jsonschema==4.16.0
 lxml==4.9.1
 MarkupSafe==2.1.1
+matplotlib
 newspaper3k==0.2.8
 nltk==3.7
 numpy==1.23.3
