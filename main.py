@@ -1,3 +1,12 @@
+import pandas as pd
+import streamlit as st
+import cleantext
+import matplotlib.pyplot as plt
+from matplotlib import style
+style.use("ggplot")
+
+st.header('Sentiment Analysis')
+
 st.sidebar.header('Data Input')
 
 # Collects user input features into dataframe
