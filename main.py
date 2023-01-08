@@ -1,14 +1,3 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import pickle
-import seaborn as sns
-from textblob import TextBlob
-import re 
-import matplotlib.pyplot as plt
-from matplotlib import style
-style.use("ggplot")
-
 st.write("""
 # Aplikasi Analisis Sentimen
 """)
