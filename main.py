@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import cleantext
 import string
+import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 import matplotlib.pyplot as plt
 from matplotlib import style
