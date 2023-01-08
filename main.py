@@ -1,7 +1,3 @@
-st.write("""
-# Aplikasi Analisis Sentimen
-""")
-
 st.sidebar.header('Data Input')
 
 # Collects user input features into dataframe
