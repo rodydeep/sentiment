@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import cleantext
+from sklearn.feature_extraction.text import CountVectorizer
 import matplotlib.pyplot as plt
 from matplotlib import style
 style.use("ggplot")
