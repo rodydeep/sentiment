@@ -2,11 +2,20 @@ import pandas as pd
 import streamlit as st
 import cleantext
 import string
+import re
 import pickle
+import nltk
+nltk.download("punkt")
+nltk.download("stopwords")
+from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
 import matplotlib.pyplot as plt
 from matplotlib import style
 style.use("ggplot")
+
+
+
+#pembuatan header
 
 st.header('Sentiment Analysis')
 
