@@ -12,7 +12,7 @@ st.header('Sentiment Analysis')
 
 st.sidebar.header('Data Input')
 
-# Collects user input features into dataframe
+# input data
 uploaded_file = st.sidebar.file_uploader("Upload data", type=["csv","xlsx"])
 if uploaded_file is not None:
     inputan = pd.read_excel(uploaded_file)
@@ -23,19 +23,7 @@ else:
 
         features = pd.DataFrame(data, index=[0])
         return features
-    
-
-# Combines user input features with entire penguins dataset
-# This will be useful for the encoding phase
-
-inputan['vector'] = inputan['Content'].astype(str)
-
-vec = CountVectorizer().fit(inputan['vector'])
-vec_transform = vec.transform(inputan['vector'])
-print(vec_transform)
-x_test = vec_transform.toarray()
-
-
+   
 
 
 # Displays the user input features
@@ -47,7 +35,65 @@ else:
     st.write('Awaiting CSV file to be uploaded. Currently using example input parameters (shown below).')
     st.write(inputan)
 
-# Reads in saved classification model
+    
+#preprocessing awal
+def casefolding(text):
+  text = text.lower()         #merubah kalimat menjadi huruf kecil
+  return text
+
+def cleaning(text):
+    text = text.replace('\\t',"").replace('\\n',"").replace('\\u',"").replace('\\',"")
+
+    text = text.encode('ascii', 'replace').decode('ascii')
+
+    text = ' '.join(re.sub("([@#][A-Za-z0-9]+)|(\w+:\/\/\s+)"," ",text).split())
+
+    text = re.sub(r'http\S+', '',text)
+    text = re.sub(r"[.,:;+!\-_<^/=?\"'\(\)\d\*]", " ",text)
+    text = re.sub(r'http\S+', '',text)
+    text = text.translate(str.maketrans(" ", " ", string.punctuation))
+    text = text.strip()
+    text = re.sub(r"\b[a-z A-Z]\b", " ", text)
+    text = re.sub("/s+", " ", text)
+    text = re.sub(r"\b[a-z A-Z]\b", " ", text)
+    
+    return text
+
+def tokenize(text):
+  return word_tokenize(text)
+
+def freq(text):
+  return FreqDist(text)
+
+def preprocess_data(text):
+    text = casefolding (text)
+    text = cleaning (text)
+    text = tokenize (text)
+
+   
+
+    return text
+
+
+if st.button("Preprocessing"):
+  st.subheader('Hasil Preprocessing Data')
+  inputan['Data Bersih'] = inputan['Content'].apply(preprocess_data)
+  st.write(inputan[['Author','Data Bersih',]])
+
+
+#preprocessing akhir    
+
+
+
+inputan['vector'] = inputan['Content'].astype(str)
+
+vec = CountVectorizer().fit(inputan['vector'])
+vec_transform = vec.transform(inputan['vector'])
+print(vec_transform)
+x_test = vec_transform.toarray()
+
+
+# membaca model 
 load_model = pickle.load(open('model_bayes.pkl', 'rb'))
 
 inputan['sentimen'] = load_model.predict(x_test)
