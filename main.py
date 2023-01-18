@@ -1,13 +1,8 @@
 import pandas as pd
 import streamlit as st
 import cleantext
-import string
-import re
 import pickle
 import nltk
-nltk.download("punkt")
-nltk.download("stopwords")
-from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
 import matplotlib.pyplot as plt
 from matplotlib import style
@@ -46,48 +41,6 @@ else:
 
     
 #preprocessing awal
-def casefolding(text):
-  text = text.lower()         #merubah kalimat menjadi huruf kecil
-  return text
-
-def cleaning(text):
-    text = text.replace('\\t',"").replace('\\n',"").replace('\\u',"").replace('\\',"")
-
-    text = text.encode('ascii', 'replace').decode('ascii')
-
-    text = ' '.join(re.sub("([@#][A-Za-z0-9]+)|(\w+:\/\/\s+)"," ",text).split())
-
-    text = re.sub(r'http\S+', '',text)
-    text = re.sub(r"[.,:;+!\-_<^/=?\"'\(\)\d\*]", " ",text)
-    text = re.sub(r'http\S+', '',text)
-    text = text.translate(str.maketrans(" ", " ", string.punctuation))
-    text = text.strip()
-    text = re.sub(r"\b[a-z A-Z]\b", " ", text)
-    text = re.sub("/s+", " ", text)
-    text = re.sub(r"\b[a-z A-Z]\b", " ", text)
-    
-    return text
-
-def tokenize(text):
-  return word_tokenize(text)
-
-def freq(text):
-  return FreqDist(text)
-
-def preprocess_data(text):
-    text = casefolding (text)
-    text = cleaning (text)
-    text = tokenize (text)
-
-   
-
-    return text
-
-
-if st.button("Preprocessing"):
-  st.subheader('Hasil Preprocessing Data')
-  inputan['Data Bersih'] = inputan['Content'].apply(preprocess_data)
-  st.write(inputan[['Author','Data Bersih',]])
 
 
 #preprocessing akhir    
